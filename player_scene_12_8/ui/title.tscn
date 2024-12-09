@@ -1,0 +1,54 @@
+[gd_scene load_steps=5 format=3 uid="uid://bkgfidmtoedqs"]
+
+[ext_resource type="Script" path="res://ui/title.gd" id="1_7mhlv"]
+[ext_resource type="Texture2D" uid="uid://bq3pjfngspb7g" path="res://assets/environment/back.png" id="1_x4mxr"]
+[ext_resource type="Texture2D" uid="uid://vu3kmi6cma74" path="res://assets/environment/middle.png" id="2_x5u3f"]
+[ext_resource type="FontFile" uid="uid://cymp0xrm0t6n0" path="res://assets/Kenney Thick.ttf" id="3_vfq8o"]
+
+[node name="Title" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7mhlv")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_x4mxr")
+stretch_mode = 6
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -9.0
+offset_top = 281.0
+offset_right = 1161.0
+offset_bottom = 649.0
+texture = ExtResource("2_x5u3f")
+stretch_mode = 1
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 228.0
+offset_top = 170.0
+offset_right = 948.0
+offset_bottom = 251.0
+theme_override_fonts/font = ExtResource("3_vfq8o")
+theme_override_font_sizes/font_size = 72
+text = "Jungle Jump"
+
+[node name="Message" type="Label" parent="."]
+layout_mode = 0
+offset_left = 291.0
+offset_top = 312.0
+offset_right = 842.0
+offset_bottom = 393.0
+theme_override_fonts/font = ExtResource("3_vfq8o")
+theme_override_font_sizes/font_size = 30
+text = "Press Space to Play"
