@@ -1,0 +1,71 @@
+[gd_scene load_steps=10 format=3 uid="uid://coew8wvu2gsan"]
+
+[ext_resource type="Script" path="res://levels/level_base.gd" id="1_f81dh"]
+[ext_resource type="Texture2D" uid="uid://c52uua1gdflaj" path="res://assets/parallaxBG-interior1.png" id="2_116f0"]
+[ext_resource type="TileSet" uid="uid://dn505hopwb4de" path="res://assets/tilesets/tiles_items.tres" id="3_78107"]
+[ext_resource type="TileSet" uid="uid://blhd0ogpuydej" path="res://assets/tilesets/tiles_spikes.tres" id="4_qlhur"]
+[ext_resource type="TileSet" uid="uid://dhxw3f8l2saqn" path="res://assets/tilesets/tiles_world.tres" id="5_oyuf0"]
+[ext_resource type="PackedScene" uid="uid://dy4itf2lpofof" path="res://Player/player.tscn" id="7_gcfel"]
+[ext_resource type="PackedScene" uid="uid://bs33mangwoqtj" path="res://ui/hud.tscn" id="10_dgue3"]
+[ext_resource type="PackedScene" uid="uid://iatjl8umlr06" path="res://items/item.tscn" id="11_agvcd"]
+[ext_resource type="PackedScene" uid="uid://b7mpecfv7sdf0" path="res://items/door.tscn" id="12_1mjk0"]
+
+[node name="LevelBase" type="Node2D"]
+script = ExtResource("1_f81dh")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.2, 1)
+motion_mirroring = Vector2(576, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(-14, -1.00002)
+scale = Vector2(4.35938, 3.11719)
+texture = ExtResource("2_116f0")
+centered = false
+
+[node name="ParallaxLayer2a" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.6, 1)
+
+[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2a"]
+texture_repeat = 3
+position = Vector2(574, 601)
+scale = Vector2(1.31136, 1)
+region_enabled = true
+region_rect = Rect2(0, 0, 880, 368)
+
+[node name="Items" type="TileMap" parent="."]
+tile_set = ExtResource("3_78107")
+format = 2
+
+[node name="Danger" type="TileMap" parent="."]
+tile_set = ExtResource("4_qlhur")
+format = 2
+
+[node name="World" type="TileMap" parent="."]
+tile_set = ExtResource("5_oyuf0")
+format = 2
+
+[node name="Player" parent="." instance=ExtResource("7_gcfel")]
+position = Vector2(252, 281)
+
+[node name="SpawnPoint" type="Marker2D" parent="."]
+position = Vector2(253, 296)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="CanvasLayer" instance=ExtResource("10_dgue3")]
+offset_left = 5.0
+offset_top = 49.0
+offset_bottom = 154.0
+
+[node name="Item" parent="." instance=ExtResource("11_agvcd")]
+position = Vector2(5, 49)
+
+[node name="Door" parent="." instance=ExtResource("12_1mjk0")]
+position = Vector2(74, -29)
+
+[connection signal="score_changed" from="." to="CanvasLayer/HUD" method="update_score"]
+[connection signal="life_changed" from="Player" to="CanvasLayer/HUD" method="_on_player_life_changed"]
+[connection signal="body_entered" from="Door" to="." method="_on_door_body_entered"]

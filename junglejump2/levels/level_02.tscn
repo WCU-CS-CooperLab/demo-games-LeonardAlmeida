@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://7bnbcurk8kqe"]
+
+[ext_resource type="PackedScene" uid="uid://coew8wvu2gsan" path="res://levels/level_base.tscn" id="1_1kctk"]
+
+[node name="LevelBase" instance=ExtResource("1_1kctk")]
+
+[node name="SpawnPoint" parent="." index="5"]
+position = Vector2(249, 324)
