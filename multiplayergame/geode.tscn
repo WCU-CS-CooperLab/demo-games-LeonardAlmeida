@@ -1,0 +1,86 @@
+[gd_scene load_steps=10 format=3 uid="uid://bdmfjxulneuk5"]
+
+[ext_resource type="Texture2D" uid="uid://n2mif73hlvvm" path="res://ore.png" id="1_1ak0o"]
+[ext_resource type="Script" path="res://geode.gd" id="1_qgg16"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_seb1v"]
+radius = 38.2099
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qw0aq"]
+atlas = ExtResource("1_1ak0o")
+region = Rect2(96, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7mkj6"]
+atlas = ExtResource("1_1ak0o")
+region = Rect2(160, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qgg0q"]
+atlas = ExtResource("1_1ak0o")
+region = Rect2(66, 160, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lkajn"]
+atlas = ExtResource("1_1ak0o")
+region = Rect2(192, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4djcf"]
+atlas = ExtResource("1_1ak0o")
+region = Rect2(192, 96, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_i486g"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qw0aq")
+}],
+"loop": true,
+"name": &"copper",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7mkj6")
+}],
+"loop": true,
+"name": &"gold",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 20.0,
+"texture": SubResource("AtlasTexture_qgg0q")
+}],
+"loop": true,
+"name": &"iron",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lkajn")
+}],
+"loop": true,
+"name": &"stone1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4djcf")
+}],
+"loop": true,
+"name": &"stone2",
+"speed": 5.0
+}]
+
+[node name="Geode" type="Area2D"]
+collision_layer = 2
+script = ExtResource("1_qgg16")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(28, 19)
+shape = SubResource("CircleShape2D_seb1v")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(27, 18)
+scale = Vector2(1.10606, 1)
+sprite_frames = SubResource("SpriteFrames_i486g")
+animation = &"copper"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=3 uid="uid://bvfeg673vo32f"]
+
+[ext_resource type="Script" path="res://multiplayer_test.gd" id="1_85hs2"]
+[ext_resource type="PackedScene" uid="uid://d0pommfvcj328" path="res://player.tscn" id="2_1s6qg"]
+[ext_resource type="Texture2D" uid="uid://cky1dmgwrkll7" path="res://icon.svg" id="3_563u5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tjgtl"]
+size = Vector2(265, 20)
+
+[node name="Multiplayer_test" type="Node2D"]
+script = ExtResource("1_85hs2")
+player_scene = ExtResource("2_1s6qg")
+
+[node name="host" type="Button" parent="."]
+offset_left = 83.0
+offset_top = 248.0
+offset_right = 221.0
+offset_bottom = 299.0
+text = "host
+"
+
+[node name="join" type="Button" parent="."]
+offset_left = 78.0
+offset_top = 354.0
+offset_right = 223.0
+offset_bottom = 409.0
+text = "join"
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://player.tscn")
+spawn_path = NodePath("..")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(42, 69)
+shape = SubResource("RectangleShape2D_tjgtl")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D/CollisionShape2D"]
+position = Vector2(5.5, 72)
+scale = Vector2(2, 1)
+texture = ExtResource("3_563u5")
+
+[connection signal="pressed" from="host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="join" to="." method="_on_join_pressed"]
