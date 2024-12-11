@@ -39,7 +39,7 @@ region_rect = Rect2(0, 0, 880, 368)
 tile_set = ExtResource("3_78107")
 format = 2
 
-[node name="Danger" type="TileMap" parent="."]
+[node name="Danger" type="TileMap" parent="." groups=["danger"]]
 tile_set = ExtResource("4_qlhur")
 format = 2
 
@@ -66,6 +66,7 @@ position = Vector2(5, 49)
 [node name="Door" parent="." instance=ExtResource("12_1mjk0")]
 position = Vector2(74, -29)
 
-[connection signal="score_changed" from="." to="CanvasLayer/HUD" method="update_score"]
+[connection signal="score_changed" from="." to="CanvasLayer/HUD" method="update_life"]
+[connection signal="died" from="Player" to="." method="_on_player_died"]
 [connection signal="life_changed" from="Player" to="CanvasLayer/HUD" method="_on_player_life_changed"]
 [connection signal="body_entered" from="Door" to="." method="_on_door_body_entered"]

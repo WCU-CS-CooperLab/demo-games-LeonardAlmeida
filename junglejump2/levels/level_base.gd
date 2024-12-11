@@ -6,6 +6,8 @@ func _ready():
 	$Items.hide()
 	$Player.reset($SpawnPoint.position)
 	set_camera_limits()
+	$Player.life_changed.connect($CanvasLayer/HUD.update_life)
+
 func set_camera_limits():
 	var map_size = $World.get_used_rect()
 	var cell_size = $World.tile_set.tile_size
@@ -40,6 +42,8 @@ func set_score(value):
 func _on_player_died():
 	GameState.restart()
 	
+	print("player d")
+
 func _on_door_entered(body):
 	print("door entered")
 	GameState.next_level()

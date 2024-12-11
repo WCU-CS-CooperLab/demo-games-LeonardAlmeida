@@ -40,6 +40,9 @@ func change_state(new_state):
 			died.emit
 			hide()
 			
+			
+			
+			
 
 func get_input():
 	if state == HURT:
@@ -103,3 +106,6 @@ func reset(_position):
 func hurt():
 	if state != HURT:
 		change_state(HURT)
+func dead():
+	if state == DEAD:
+		GameState.restart()

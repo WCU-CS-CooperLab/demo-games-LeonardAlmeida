@@ -6,6 +6,7 @@ var title_screen = "res://ui/title.tscn"
 func restart():
 	current_level = 0
 	get_tree().change_scene_to_file(title_screen)
+
 func next_level():
 	current_level += 1
 	if current_level <= num_levels:
