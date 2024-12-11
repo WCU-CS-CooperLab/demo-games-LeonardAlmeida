@@ -2,14 +2,28 @@
 
 [ext_resource type="Script" path="res://multiplayer_test.gd" id="1_85hs2"]
 [ext_resource type="PackedScene" uid="uid://d0pommfvcj328" path="res://player.tscn" id="2_1s6qg"]
-[ext_resource type="Texture2D" uid="uid://cky1dmgwrkll7" path="res://icon.svg" id="3_563u5"]
+[ext_resource type="Texture2D" uid="uid://76fd0ve01a2u" path="res://parallaxBG-interior1.png" id="3_jbpqu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tjgtl"]
-size = Vector2(265, 20)
+size = Vector2(1086.5, 20)
 
 [node name="Multiplayer_test" type="Node2D"]
 script = ExtResource("1_85hs2")
 player_scene = ExtResource("2_1s6qg")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxBackground"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -12.0
+offset_top = -262.0
+offset_right = 81.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_jbpqu")
 
 [node name="host" type="Button" parent="."]
 offset_left = 83.0
@@ -31,15 +45,15 @@ _spawnable_scenes = PackedStringArray("res://player.tscn")
 spawn_path = NodePath("..")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(161, -209)
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+position = Vector2(37, 132)
+scale = Vector2(2, 0.710938)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(42, 69)
+position = Vector2(452.75, 69)
 shape = SubResource("RectangleShape2D_tjgtl")
-
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D/CollisionShape2D"]
-position = Vector2(5.5, 72)
-scale = Vector2(2, 1)
-texture = ExtResource("3_563u5")
 
 [connection signal="pressed" from="host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="join" to="." method="_on_join_pressed"]

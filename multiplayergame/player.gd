@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 var screensize = Vector2.ZERO
-
+@export var health = 100
 @export var speed = 200  # Normal speed
 @export var sprint_speed = 350  # Sprint speed
 @export var gravity = 1000  # Gravity force
@@ -23,6 +23,9 @@ func _ready():
 	screensize = get_viewport_rect().size
 	change_state(ALIVE)
 	$GunCooldown.wait_time = fire_rate
+
+func _on_gun_cooldown_timeout():
+	can_shoot = true
 
 func change_state(new_state):
 	match new_state:
@@ -66,8 +69,10 @@ func get_input():
 	# Synchronize input across the network
 	rpc("synchronize_input", horizontal_input, velocity.y, Input.is_action_pressed("jump"), Input.is_action_pressed("shoot"))
 	
+	
 	if horizontal_input != 0:
 		$AnimatedSprite2D.scale.x = horizontal_input  # Left (-1) or Right (1)
+		update_muzzle_position()
 
 # RPC function to synchronize input across peers
 @rpc
@@ -87,6 +92,8 @@ func synchronize_input(horizontal_input: float, vertical_velocity: float, is_jum
 	# Handle shooting state
 	if is_shooting and can_shoot:
 		shoot()
+		
+	
 
 # Update animation based on state
 func update_animation():
@@ -134,4 +141,36 @@ func shoot():
 func spawn_bullet(direction: Vector2):
 	can_shoot = false
 	$GunCooldown.start()
-	var bull
+	
+	if bullet_scene == null:
+		print("Bullet scene is missing!")
+		return
+	
+	var bullet = bullet_scene.instantiate()
+	if bullet == null:
+		print("Failed to instantiate bullet!")
+		return
+	
+	# Add the bullet to the current scene tree
+	get_tree().root.add_child(bullet)
+	bullet.global_position = $Muzzle.global_position  # Ensure $Muzzle exists in the scene
+	
+	if bullet.has_method("start"):
+		bullet.start(direction)  # Pass direction to the bullet's logic
+	else:
+		print("Bullet scene does not have a 'start' method.")
+
+func take_damage(amount: int):
+	health -= amount
+	if health <= 0:
+		die()
+
+func die():
+	print("Player has died!")
+	change_state(DEAD)
+
+func update_muzzle_position():
+	if $AnimatedSprite2D.scale.x > 0:
+		$Muzzle.position.x = abs($Muzzle.position.x)  # Move muzzle to the right
+	else:
+		$Muzzle.position.x = -abs($Muzzle.position.x)  # Move muzzle to the lef
